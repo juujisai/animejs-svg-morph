@@ -9,6 +9,9 @@ body {
   height: 400vh;
 }
 
+.header-section {
+  background-color: #3e758f;
+}
 
 .header-section,
 .section1 {
@@ -18,12 +21,39 @@ body {
   overflow: hidden;
 }
 
-.header-img {
+.logo {
   position: absolute;
-  left: -50%;
-  bottom: 0;
+  left: 10%;
+  top: 10%;
+  z-index: 1;
+}
+
+
+
+.header-img-cont {
+  position: absolute;
+  left: 0;
+  bottom: 0%;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+
+}
+
+.header-img {
+
   height: 100%;
 }
+
+.header-info {
+  position: absolute;
+  left: 10%;
+  top: 50%;
+  z-index: 1;
+}
+
+
+
 
 .header-svg {
   position: absolute;
