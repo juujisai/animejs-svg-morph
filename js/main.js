@@ -177,46 +177,89 @@ const girlTimeline = anime.timeline({
 })
 
 
-infoButton.addEventListener('mouseenter', () => {
+const girlLooksStraight = (isFromHover) => {
   for (let i = 0; i < girlPaths.length; i++) {
-    girlTimeline
-      .add({
+    if (isFromHover) {
+      console.log('in')
+      girlTimeline.add({
         targets: `.girl-path${i + 1}`,
         d: [
           { value: girlPathsDefault[i].d },
         ]
       }, -1 * animationDuration)
-      .add({
-        targets: `.girl-path${i + 1}`,
-        d: [
-          { value: girlPaths[i].d },
-        ]
-      }
-        , animationDuration
-      )
+    }
+    girlTimeline.add({
+      targets: `.girl-path${i + 1}`,
+      d: [
+        { value: girlPaths[i].d },
+      ]
+    }
+      , animationDuration
+    )
   }
-})
+}
 
-
-infoButton.addEventListener('mouseleave', () => {
-  girlTimeline
+const girlLooksRight = (isFromHover) => {
+  // girlTimeline
   for (let i = 0; i < girlPathsDefault.length; i++) {
-    girlTimeline
-      .add({
+
+    if (isFromHover) {
+      girlTimeline.add({
         targets: `.girl-path${i + 1}`,
         d: [
           { value: girlPaths[i].d },
         ]
       }, -1 * animationDuration)
-      .add({
+    }
+    girlTimeline.add({
+      targets: `.girl-path${i + 1}`,
+      d: [
+        { value: girlPathsDefault[i].d },
+      ]
+    }
+      , animationDuration
+
+    )
+  }
+}
+
+infoButton.addEventListener('mouseenter', girlLooksStraight)
+
+
+infoButton.addEventListener('mouseleave', girlLooksRight)
+
+let girlFlag = true
+
+infoButton.addEventListener('click', function () {
+  if (girlFlag) {
+
+    infoButton.removeEventListener('mouseenter', girlLooksStraight)
+    infoButton.removeEventListener('mouseleave', girlLooksRight)
+
+    for (let i = 0; i < girlPaths.length; i++) {
+      girlTimeline.add({
         targets: `.girl-path${i + 1}`,
         d: [
-          { value: girlPathsDefault[i].d },
+          { value: girlPaths[i].d },
         ]
-      }
-        , animationDuration
+      }, -1 * animationDuration)
+        .add({
+          targets: `.girl-path${i + 1}`,
+          d: [
+            { value: girlPaths[i].d },
+          ]
+        }
+          , animationDuration
+        )
+    }
 
-      )
+  } else {
+    infoButton.addEventListener('mouseenter', girlLooksStraight)
+    infoButton.addEventListener('mouseleave', girlLooksRight)
+
+
   }
-})
+  girlFlag = !girlFlag
+  this.parentNode.classList.toggle('hide')
 
+})
