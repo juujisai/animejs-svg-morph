@@ -4,7 +4,7 @@ const smokePath3 = "M1208 584C1205.5 613.5 1161.17 621.698 1186.17 662.698C1201.
 
 const smokePath1 = "M1136.17 564C1133.67 593.5 1161.17 621.698 1186.17 662.698C1201.67 695.531 1233.5 808.99 1233.5 774C1233.5 690 1278.17 684.5 1278.17 612.698C1278.17 547.658 1312.17 590.198 1351.67 552.698C1391.17 515.198 1348.67 510.698 1320.17 485.698C1291.67 460.698 1308.67 432.198 1320.17 384.698C1331.67 337.198 1260.5 312 1233.5 316.5C1206.5 321 1155.67 308.698 1136.17 305.198C1116.67 301.698 1094.17 345.198 1104.67 384.698C1115.17 424.198 1158.5 449.198 1161 485.698C1163.5 522.198 1138.67 534.5 1136.17 564Z"
 
-console.log('z')
+// console.log('z')
 
 const headerTimeline = anime.timeline({
   duration: 3000,
@@ -180,7 +180,7 @@ const girlTimeline = anime.timeline({
 const girlLooksStraight = (isFromHover) => {
   for (let i = 0; i < girlPaths.length; i++) {
     if (isFromHover) {
-      console.log('in')
+      // console.log('in')
       girlTimeline.add({
         targets: `.girl-path${i + 1}`,
         d: [
@@ -263,3 +263,71 @@ infoButton.addEventListener('click', function () {
   this.parentNode.classList.toggle('hide')
 
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+// menu list
+const menuCont = document.querySelector('.menu-list-cont ul');
+const menuItems = [
+  {
+    id: 0,
+    name: 'lorem lorem 1',
+    price: '10',
+    currency: 'PLN'
+  },
+  {
+    id: 1,
+    name: 'lorem lorem 1',
+    price: '20',
+    currency: 'PLN'
+  },
+  {
+    id: 2,
+    name: 'lorem lorem 1',
+    price: '30',
+    currency: 'PLN'
+  },
+]
+
+
+
+
+class MenuItem {
+  constructor(menuCont, type, className, { id, name, price, currency }) {
+    this.id = id;
+    this.name = name;
+    this.price = price;
+    this.currency = currency;
+    this.elementLi; this.elementA;
+    this.menuCont = menuCont;
+    this.type1 = type[0];
+    this.type2 = type[1];
+    this.className = className
+
+  }
+  addElement() {
+
+    this.elementLi = document.createElement(this.type1)
+
+    this.elementA = document.createElement(this.type2)
+    this.elementA.innerHTML = `<p>${this.name}</p> <span class=${this.className}>${this.price} ${this.currency}</span>`
+
+    this.elementLi.appendChild(this.elementA)
+    console.log(this.menuCont)
+
+    this.menuCont.appendChild(this.elementLi)
+
+  }
+
+}
+menuItems.map(item => new MenuItem(menuCont, ['li', 'a'], 'price', item).addElement())
