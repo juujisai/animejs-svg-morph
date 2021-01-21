@@ -109,5 +109,28 @@ body {
   top: 10%;
   width: 40%;
   height: 70%;
+  padding: 20px;
+  transform: scaleY(1);
   background-color: #ddd;
+  transition: .3s;
+}
+
+.menu-list.hidden {
+  transform: scaleY(0)
+}
+
+.menu-list h1 {
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #000;
+}
+
+.menu-list-cont ul {
+  list-style-type: none;
+}
+
+.menu-list-cont li a {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }

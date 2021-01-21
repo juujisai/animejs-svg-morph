@@ -261,6 +261,10 @@ infoButton.addEventListener('click', function () {
   }
   girlFlag = !girlFlag
   this.parentNode.classList.toggle('hide')
+  setTimeout(() => {
+
+    document.querySelector('.menu-list').classList.toggle('hidden')
+  }, 500)
 
 })
 
@@ -297,6 +301,24 @@ const menuItems = [
     price: '30',
     currency: 'PLN'
   },
+  {
+    id: 3,
+    name: 'lorem lorem 1',
+    price: '40',
+    currency: 'PLN'
+  },
+  {
+    id: 4,
+    name: 'lorem lorem 1',
+    price: '50',
+    currency: 'PLN'
+  },
+  {
+    id: 5,
+    name: 'lorem lorem 1',
+    price: '60',
+    currency: 'PLN'
+  },
 ]
 
 
@@ -316,9 +338,7 @@ class MenuItem {
 
   }
   addElement() {
-
     this.elementLi = document.createElement(this.type1)
-
     this.elementA = document.createElement(this.type2)
     this.elementA.innerHTML = `<p>${this.name}</p> <span class=${this.className}>${this.price} ${this.currency}</span>`
 
