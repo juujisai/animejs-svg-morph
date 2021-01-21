@@ -343,7 +343,7 @@ class MenuItem {
     this.elementA.innerHTML = `<p>${this.name}</p> <span class=${this.className}>${this.price} ${this.currency}</span>`
 
     this.elementLi.appendChild(this.elementA)
-    console.log(this.menuCont)
+    // console.log(this.menuCont)
 
     this.menuCont.appendChild(this.elementLi)
 
@@ -351,3 +351,105 @@ class MenuItem {
 
 }
 menuItems.map(item => new MenuItem(menuCont, ['li', 'a'], 'price', item).addElement())
+
+
+
+
+
+
+
+
+
+
+
+// nav 
+
+const navButtons = [...document.querySelectorAll('.nav-btn')]
+
+
+const part1Element = document.querySelector('header')
+const part2Element = document.querySelector('.section1')
+const part3Element = document.querySelector('.section2')
+const part4Element = document.querySelector('footer')
+
+const partElementAll = [part1Element, part2Element, part3Element, part4Element]
+let partOffsets = []
+
+partElementAll.forEach(item => partOffsets = [...partOffsets, item.offsetTop])
+
+
+const navPath1 = "M30.8386 14L47.6772 14V30.1763V47.6763L41.0093 47.6763H30.8386L20.5093 47.6763H14.0001L14 30.1763L14.0001 14L30.8386 14Z"
+
+const navPath2 = "M30.5 0L37.7001 21.7721H61L42.15 35.2279L49.35 57L30.5 43.5441L11.65 57L18.85 35.2279L0 21.7721H23.2999L30.5 0Z"
+
+
+const animateNavPath = (target, path) => {
+  const navTimeline = anime.timeline({
+    duration: 200,
+    easing: 'linear'
+  })
+
+  navTimeline.add({
+    targets: `.${target} svg path`,
+    d: [{ value: path }]
+  })
+
+}
+
+let scrollValue = 0;
+let windowHeight = window.innerHeight
+const checkWhichPart = function () {
+  scrollValue = window.scrollY
+
+  if (scrollValue >= 0 && scrollValue <= partOffsets[1]) {
+    animateNavPath('part1', navPath2)
+    animateNavPath('part2', navPath1)
+
+  } else if (scrollValue > partOffsets[1] && scrollValue <= partOffsets[2]) {
+    animateNavPath('part1', navPath1)
+    animateNavPath('part2', navPath2)
+    animateNavPath('part3', navPath1)
+
+  } else if (scrollValue > partOffsets[2] && scrollValue <= partOffsets[3]) {
+    animateNavPath('part2', navPath1)
+    animateNavPath('part3', navPath2)
+    animateNavPath('part4', navPath1)
+
+  } else if (scrollValue > partOffsets[3]) {
+    animateNavPath('part3', navPath1)
+    animateNavPath('part4', navPath2)
+  }
+
+
+}
+
+const page = document.querySelector('.wrap')
+
+let pageTop = 0;
+page.style.top = `${pageTop}px`
+
+window.addEventListener('wheel', (e) => {
+  if (e.deltaY >= 0) {
+    // page.style.top = `${-1.5 * windowHeight}px`
+    // console.log('dol')
+    pageTop -= 1.5 * windowHeight
+  } else if (e.deltaY <= 0) {
+    // page.style.top = `${1.5 * windowHeight}px`
+    // console.log('gora')
+    pageTop += 1.5 * windowHeight
+
+  }
+  if (pageTop >= windowHeight) {
+    pageTop = 0
+  }
+
+  if (pageTop <= -1 * (partElementAll.length) * windowHeight) {
+    pageTop = -1.5 * (partElementAll.length - 1) * windowHeight
+
+  }
+
+  console.log(pageTop)
+  page.style.top = `${pageTop}px`
+
+  checkWhichPart()
+})
