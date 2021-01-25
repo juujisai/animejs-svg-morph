@@ -366,13 +366,7 @@ menuItems.map(item => new MenuItem(menuCont, ['li', 'a'], 'price', item).addElem
 
 const navButtons = [...document.querySelectorAll('.nav-btn')]
 
-
-const part1Element = document.querySelector('header')
-const part2Element = document.querySelector('.section1')
-const part3Element = document.querySelector('.section2')
-const part4Element = document.querySelector('footer')
-
-const partElementAll = [part1Element, part2Element, part3Element, part4Element]
+const partElementAll = [...document.querySelectorAll('.scroll-ani')]
 let partOffsets = []
 
 partElementAll.forEach(item => partOffsets = [...partOffsets, item.offsetTop])
@@ -385,7 +379,7 @@ const navPath2 = "M30.5 0L37.7001 21.7721H61L42.15 35.2279L49.35 57L30.5 43.5441
 
 const animateNavPath = (target, path) => {
   const navTimeline = anime.timeline({
-    duration: 200,
+    duration: 300,
     easing: 'linear'
   })
 
@@ -396,26 +390,38 @@ const animateNavPath = (target, path) => {
 
 }
 
+
+
 let scrollValue = 0;
 let windowHeight = window.innerHeight
-const checkWhichPart = function () {
+const checkWhichPart = function (pageNumber) {
   scrollValue = window.scrollY
 
-  if (scrollValue >= 0 && scrollValue <= partOffsets[1]) {
+  if (pageNumber === 0) {
     animateNavPath('part1', navPath2)
     animateNavPath('part2', navPath1)
+    animateNavPath('part3', navPath1)
+    animateNavPath('part4', navPath1)
 
-  } else if (scrollValue > partOffsets[1] && scrollValue <= partOffsets[2]) {
+  }
+  if (pageNumber === 1) {
+
     animateNavPath('part1', navPath1)
     animateNavPath('part2', navPath2)
     animateNavPath('part3', navPath1)
+    animateNavPath('part4', navPath1)
 
-  } else if (scrollValue > partOffsets[2] && scrollValue <= partOffsets[3]) {
+  }
+  if (pageNumber === 2) {
+    animateNavPath('part1', navPath1)
     animateNavPath('part2', navPath1)
     animateNavPath('part3', navPath2)
     animateNavPath('part4', navPath1)
 
-  } else if (scrollValue > partOffsets[3]) {
+  }
+  if (pageNumber === 3) {
+    animateNavPath('part1', navPath1)
+    animateNavPath('part2', navPath1)
     animateNavPath('part3', navPath1)
     animateNavPath('part4', navPath2)
   }
@@ -426,18 +432,16 @@ const checkWhichPart = function () {
 const page = document.querySelector('.wrap')
 
 let pageTop = 0;
+let pageNumber = 0;
 page.style.top = `${pageTop}px`
 
 window.addEventListener('wheel', (e) => {
   if (e.deltaY >= 0) {
-    // page.style.top = `${-1.5 * windowHeight}px`
-    // console.log('dol')
-    pageTop -= 1.5 * windowHeight
+    pageTop -= 1.5 * windowHeight;
+    pageNumber >= partElementAll.length - 1 ? pageNumber = partElementAll.length - 1 : pageNumber++
   } else if (e.deltaY <= 0) {
-    // page.style.top = `${1.5 * windowHeight}px`
-    // console.log('gora')
     pageTop += 1.5 * windowHeight
-
+    pageNumber <= 0 ? pageNumber = 0 : pageNumber--
   }
   if (pageTop >= windowHeight) {
     pageTop = 0
@@ -448,8 +452,15 @@ window.addEventListener('wheel', (e) => {
 
   }
 
-  console.log(pageTop)
   page.style.top = `${pageTop}px`
 
-  checkWhichPart()
+  checkWhichPart(pageNumber)
 })
+
+
+navButtons.forEach(item => item.addEventListener('click', function () {
+  const id = navButtons.findIndex(item2 => item2 === this)
+  page.style.top = `${-1.5 * id * windowHeight}px`
+  checkWhichPart(id)
+
+}))
