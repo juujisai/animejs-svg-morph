@@ -348,7 +348,8 @@ footer {
 
 
 .vid,
-.vid iframe {
+.vid iframe,
+.cover {
   position: absolute;
   left: 0;
   top: 0;
@@ -357,7 +358,13 @@ footer {
 }
 
 
-
+.cover {
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 3em;
+}
 
 
 
